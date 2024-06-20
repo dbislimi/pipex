@@ -6,7 +6,7 @@
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:18:10 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/06/17 20:19:34 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:44:40 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <stdio.h>
 # include <limits.h>
 
-void	print_tab(char **tab);
 int		ft_atoi(const char *nptr);
 long	ft_atol(const char *nptr);
 int		ft_isalpha(int c);
