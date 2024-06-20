@@ -6,7 +6,7 @@
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:08:54 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/06/20 16:18:51 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:27:42 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	command2(char **av, int fd0, int *status)
 	free(pathname);
 	if (close(fd0) == -1)
 		ft_exit("close");
-	if (pid != 0 )
+	if (pid != 0)
 		if (waitpid(pid, status, 0) == -1)
 			ft_exit("waitpid");
 	if (pid == 0)
