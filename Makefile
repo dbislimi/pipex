@@ -5,15 +5,14 @@ PIPEX_PATH = ./srcs/pipex
 BONUS_PATH = ./srcs/bonus
 
 SRCS = ${addprefix ${PIPEX_PATH}/, pipex.c}
-SRCS_B = ${addprefix ${BONUS_PATH}/,main.c move_utils.c parsing.c so_long_utils.c parsing_utils.c parsing_utils2.c flood_fill.c \
-		free.c events.c load_textures.c manage_textures.c move.c sprite.c}
+SRCS_B = ${addprefix ${BONUS_PATH}/,pipex_bonus.c}
 OBJS = ${SRCS:.c=.o}
 OBJS_B = ${SRCS_B:.c=.o}
 
 NAME = pipex
 BONUS = pipex_bonus
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 RM = rm -rf
 INCLUDES = -Iincludes
 
