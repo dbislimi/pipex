@@ -6,7 +6,7 @@
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:13:55 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/06/21 16:10:13 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/06/25 18:47:52 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,28 @@
 
 // BONUS
 
-typedef struct	s_command
+typedef struct s_command
 {
 	char	**cmd;
 	char	*pathname;
 	int		nb_of_cmds;
 }	t_command;
 
-typedef struct	s_fds
+typedef struct s_fds
 {
 	int	pipe1[2];
 	int	pipe2[2];
-	int	fdfile1;
-	int fdfile2;
 }	t_fds;
 
-typedef struct	s_main
+typedef struct s_main
 {
 	char	**av;
 	int		ac;
 }	t_main;
 
 void	execute(int i, t_main m, t_command cmd, t_fds p);
-int	get_fd(char *file, int i);
+int		change_fd(char *file, int fd);
+void	close_all(t_fds p);
+void	ft_close(int i, t_fds p);
 
 #endif

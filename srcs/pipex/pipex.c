@@ -6,7 +6,7 @@
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:08:54 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/06/20 16:27:42 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/06/21 18:23:08 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,11 @@ int	change_std(int fd, char *file)
 		return (0);
 	}
 	dup2(newfd, fd);
+	close(newfd);
 	return (1);
 }
 
-void	command1(char **av, int fd1)
+void	command1(char **av, int fd[2])
 {
 	char	**command;
 	char	*pathname;
@@ -54,22 +55,24 @@ void	command1(char **av, int fd1)
 	pid = fork();
 	command = ft_split(av[2], ' ');
 	pathname = ft_strjoin("/bin/", command[0]);
-	if (pid == 0 && change_std(0, av[1]))
+	if (pid == 0)
 	{
-		dup2(fd1, 1);
-		execve(pathname, command, NULL);
+		close(fd[0]);
+		if (change_std(0, av[1]))
+		{
+			dup2(fd[1], 1);
+			close(fd[1]);
+			execve(pathname, command, NULL);
+		}
 	}
-	else if (pid != 0)
-		wait(NULL);
 	free_tab(command);
 	free(pathname);
-	if (close(fd1) == -1)
-		ft_exit("close");
+	close(fd[1]);
 	if (pid == 0)
 		exit(1);
 }
 
-void	command2(char **av, int fd0, int *status)
+void	command2(char **av, int fd[2], int *status)
 {
 	char	**command;
 	char	*pathname;
@@ -80,13 +83,13 @@ void	command2(char **av, int fd0, int *status)
 	pathname = ft_strjoin("/bin/", command[0]);
 	if (pid == 0 && change_std(1, av[4]))
 	{
-		dup2(fd0, 0);
+		dup2(fd[0], 0);
+		close(fd[0]);
 		execve(pathname, command, NULL);
 	}
 	free_tab(command);
 	free(pathname);
-	if (close(fd0) == -1)
-		ft_exit("close");
+	close(fd[0]);
 	if (pid != 0)
 		if (waitpid(pid, status, 0) == -1)
 			ft_exit("waitpid");
@@ -102,8 +105,8 @@ int	main(int ac, char **av)
 	(void)ac;
 	if (pipe(commands_pipe) == -1)
 		return (1);
-	command1(av, commands_pipe[1]);
-	command2(av, commands_pipe[0], &status);
+	command1(av, commands_pipe);
+	command2(av, commands_pipe, &status);
 	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 		return (1);
 	return (0);
