@@ -6,18 +6,20 @@
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:15:45 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/06/25 18:46:39 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/07/03 19:07:04 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/pipex.h"
 
-int	change_fd(char *file, int fd)
+int	change_fd(char *file, int fd, char **av)
 {
 	int	newfd;
 
 	if (fd == 0)
 		newfd = open(file, O_RDONLY);
+	else if (fd == 1 && ft_strcmp(av[1], "here_doc") == 0)
+		newfd = open(file, O_WRONLY | O_APPEND | O_CREAT, 0777);
 	else
 		newfd = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	if (newfd == -1)

@@ -6,7 +6,7 @@
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:28:59 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/06/25 18:47:29 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/07/03 19:01:07 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,48 @@ void	command(t_main m, t_fds p, int i)
 		exit(1);
 	ft_close(i, p);
 }
+void	here_doc_margin(int nb_of_pipes)
+{
+	while (nb_of_pipes--)
+		write(1, "pipe ", 6);
+	write(1, "heredoc>", 8);
+}
+
+void	here_doc(int fd[2], int nb_of_pipes, char *limiter)
+{
+	char	*line;
+	int	i;
+
+	pipe(fd);
+	i = nb_of_pipes;
+	here_doc_margin(nb_of_pipes);
+	line = get_next_line(0);
+	while (ft_strncmp(line, limiter, ft_strlen(line) - 1))
+	{
+		write(fd[1], line, ft_strlen(line));
+		free(line);
+		here_doc_margin(nb_of_pipes);
+		line = get_next_line(0);
+	}
+	close(fd[1]);
+}
 
 int	main(int ac, char **av)
 {
 	t_main	main;
 	t_fds	p;
-	int		nbofcommands;
 	int		i;
 
 	i = 0;
 	main.ac = ac;
 	main.av = av;
-	nbofcommands = ac - 3;
-	while (++i <= nbofcommands)
+	if (ft_strcmp(av[1], "here_doc") == 0)
+	{
+		here_doc(p.pipe1, ac - 5, av[2]);
+		
+		i = 1;
+	}
+	while (++i <= ac - 3)
 	{
 		if (i % 2 == 1)
 			pipe(p.pipe1);

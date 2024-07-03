@@ -6,7 +6,7 @@
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:13:55 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/06/25 18:47:52 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/07/03 19:07:20 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,11 @@ typedef struct s_main
 {
 	char	**av;
 	int		ac;
+	int		heredoc_flag;
 }	t_main;
 
 void	execute(int i, t_main m, t_command cmd, t_fds p);
-int		change_fd(char *file, int fd);
+int		change_fd(char *file, int fd, char **av);
 void	close_all(t_fds p);
 void	ft_close(int i, t_fds p);
 

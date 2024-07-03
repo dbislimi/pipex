@@ -6,7 +6,7 @@
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:29:59 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/05/28 16:47:27 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:29:12 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,9 @@ int	ft_putstr(char *s)
 {
 	int	i;
 
-	i = 0;
 	if (!s)
 		return (ft_putstr("(null)"));
-	while (s[i])
-		write(1, &s[i++], 1);
-	return (i);
+	i = ft_strlen(s);
+	write(1, s, i);
+	return (i - 1);
 }

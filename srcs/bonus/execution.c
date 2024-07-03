@@ -6,7 +6,7 @@
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:13:07 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/06/25 18:32:43 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/07/03 19:03:34 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	last_command(int i, t_command cmd, t_fds p)
 
 static void	first_command(t_main m, t_command cmd, t_fds p)
 {
-	if (!change_fd(m.av[1], 0))
+	if (!change_fd(m.av[1], 0, m.av))
 		return ;
 	dup2(p.pipe1[1], 1);
 	execve(cmd.pathname, cmd.cmd, NULL);
@@ -39,9 +39,11 @@ void	execute(int i, t_main m, t_command cmd, t_fds p)
 		close(p.pipe1[1]);
 		return ;
 	}
-	else if (i == m.ac - 3 && change_fd(m.av[m.ac - 1], 1))
-		if (change_fd(m.av[m.ac - 1], 1) && last_command(i, cmd, p))
-			return ;
+	else if (i == m.ac - 3 && change_fd(m.av[m.ac - 1], 1, m.av))
+	{
+		last_command(i, cmd, p);
+		return ;
+	}
 	if (i % 2 == 1)
 	{
 		dup2(p.pipe2[0], 0);
