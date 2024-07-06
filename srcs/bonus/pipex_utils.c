@@ -6,7 +6,7 @@
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:15:45 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/07/03 19:07:04 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/07/06 17:06:31 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	change_fd(char *file, int fd, char **av)
 	return (1);
 }
 
-void	ft_close(int i, t_fds p)
+void	ft_close(int i, t_fds p, t_main m)
 {
 	if (i % 2 == 1)
 	{
@@ -42,7 +42,8 @@ void	ft_close(int i, t_fds p)
 	}
 	else if (i % 2 == 0)
 	{
-		close(p.pipe2[1]);
+		if (i != m.ac - 3)
+			close(p.pipe2[1]);
 		close(p.pipe1[0]);
 	}
 }
