@@ -6,7 +6,7 @@
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:28:59 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/07/06 17:32:59 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/07/06 18:52:46 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	command(t_main m, t_fds p, int i)
 	cmd.pathname = find_path(cmd.cmd[0], m.envp);
 	pid = fork();
 	if (cmd.pathname == NULL && pid != 0)
-		ft_printf("Error: command not found: %s\n", cmd.cmd[0]);
+		command_not_found(cmd.cmd[0], m, i);
 	else if (cmd.pathname)
 	{
 		if (pid == 0)
@@ -60,37 +60,9 @@ void	command(t_main m, t_fds p, int i)
 	}
 	free_tab(cmd.cmd);
 	free(cmd.pathname);
+	ft_close(i, p, m);
 	if (pid == 0)
 		exit(1);
-	ft_close(i, p, m);
-}
-
-void	here_doc_margin(int nb_of_pipes)
-{
-	while (nb_of_pipes--)
-		write(1, "pipe ", 6);
-	write(1, "heredoc>", 8);
-}
-
-void	here_doc(int fd[2], int nb_of_pipes, char *limiter)
-{
-	char	*line;
-	char	*lim;
-
-	pipe(fd);
-	lim = ft_strjoin(limiter, "\n");
-	here_doc_margin(nb_of_pipes);
-	line = get_next_line(0);
-	while (ft_strcmp(lim, line))
-	{
-		write(fd[1], line, ft_strlen(line));
-		free(line);
-		here_doc_margin(nb_of_pipes);
-		line = get_next_line(0);
-	}
-	free(lim);
-	free(line);
-	close(fd[1]);
 }
 
 int	main(int ac, char **av, char **envp)

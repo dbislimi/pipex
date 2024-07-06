@@ -6,7 +6,7 @@
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:15:45 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/07/06 17:06:31 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/07/06 18:53:00 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,13 @@ void	close_all(t_fds p)
 	close(p.pipe1[1]);
 	close(p.pipe2[0]);
 	close(p.pipe2[1]);
+}
+
+void	command_not_found(char *cmd, t_main m, int i)
+{
+	if (i == 1 && open(m.av[1], O_RDONLY) == -1)
+		ft_printf("Error: %s: %s\n", strerror(errno), m.av[1]);
+	else if (i == m.ac - 3)
+		open(m.av[m.ac - 1], O_WRONLY | O_TRUNC | O_CREAT, 0777);
+	ft_printf("Error: command not found: %s\n", cmd);
 }
