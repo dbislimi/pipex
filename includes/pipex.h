@@ -6,7 +6,7 @@
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:13:55 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/07/08 19:27:27 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/07/08 20:21:16 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	execute(int i, t_main m, t_command cmd, t_fds p);
 int		change_fd(char *file, int fd, char **av);
 void	close_all(t_fds p);
 void	ft_close(int i, t_fds p, t_main m);
-void	here_doc(int fd[2], int nb_of_pipes, char *limiter, int *i);
+void	here_doc(int fd[2], char *limiter, int *i);
 void	command_not_found(char *cmd, t_main m, int i);
 
 #endif

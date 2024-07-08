@@ -6,7 +6,7 @@
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:15:45 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/07/08 19:17:38 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/07/08 20:34:51 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	change_fd(char *file, int fd, char **av)
 		newfd = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	if (newfd == -1)
 	{
-		ft_printf("Error: %s: %s\n", strerror(errno), file);
+		ft_printf("Error: %s: %s\n", file, strerror(errno));
 		return (0);
 	}
 	dup2(newfd, fd);
@@ -89,10 +89,10 @@ void	command_not_found(char *cmd, t_main m, int i)
 {
 	if (i == 1 && open(m.av[1], O_RDONLY) == -1)
 	{
-		ft_printf("Error: %s: %s\n", strerror(errno), m.av[1]);
+		ft_printf("Error: %s: %s\n", m.av[1], strerror(errno));
 		return ;
 	}
 	else if (i == m.ac - 3)
 		open(m.av[m.ac - 1], O_WRONLY | O_TRUNC | O_CREAT, 0777);
-	ft_printf("Error: command not found: %s\n", cmd);
+	ft_printf("Error: %s: command not found\n", cmd);
 }

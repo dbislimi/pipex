@@ -6,7 +6,7 @@
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:15:26 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/07/08 19:17:08 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/07/08 20:43:27 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ static void	command(t_main m, int fd[2], int *status, int i)
 	int			pid;
 
 	cmd.cmd = ft_split(m.av[1 + i], ' ');
-	cmd.pathname = check_path(cmd.cmd[0], m.envp);
+	if (access(cmd.cmd[0], F_OK) == 0)
+		cmd.pathname = ft_strdup(cmd.cmd[0]);
+	else
+		cmd.pathname = check_path(cmd.cmd[0], m.envp);
 	pid = fork();
 	if (cmd.pathname == NULL && pid != 0)
 		not_a_command(cmd.cmd[0], m, i);
