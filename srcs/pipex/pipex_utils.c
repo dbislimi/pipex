@@ -6,7 +6,7 @@
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:57:05 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/07/08 20:37:35 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/07/08 21:49:56 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	not_a_command(char *cmd, t_main m, int i)
 {
 	if (i == 1 && open(m.av[1], O_RDONLY) == -1)
 	{
-		ft_printf("Error: %s: %s\n",  m.av[1], strerror(errno));
+		ft_printf("Error: %s: %s\n", m.av[1], strerror(errno));
 		return ;
 	}
 	else if (i == 2)

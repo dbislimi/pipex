@@ -6,7 +6,7 @@
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:28:59 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/07/08 21:07:54 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/07/08 21:50:15 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ static void	command(t_main m, t_fds p, int *status, int i)
 	if (pid == 0 && cmd.pathname)
 		execute(i, m, cmd, p);
 	else if (pid != 0 && i == m.ac - 3)
-			waitpid(pid, status, 0);
+		waitpid(pid, status, 0);
 	free_tab(cmd.cmd);
 	free(cmd.pathname);
 	ft_close(i, p, m);
 	if (pid == 0)
 		exit(EXIT_FAILURE);
 }
+
 static void	pipex(t_fds p, t_main m, int *status, int i)
 {
 	while (++i <= m.ac - 3)
@@ -48,6 +49,7 @@ static void	pipex(t_fds p, t_main m, int *status, int i)
 	if (i % 2 == 0)
 		close(p.pipe1[0]);
 }
+
 static int	pipes_init(t_fds *p)
 {
 	if (pipe(p->pipe1) == -1)
