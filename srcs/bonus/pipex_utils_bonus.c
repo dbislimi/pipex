@@ -1,16 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   pipex_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:15:45 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/07/06 18:53:00 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/07/08 19:17:38 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/pipex.h"
+
+char	*find_path(char *cmd, char **envp)
+{
+	int		i;
+	char	*path;
+	char	*path_with_cmd;
+	char	**paths;
+
+	i = -1;
+	while (ft_strncmp(envp[++i], "PATH", 4) != 0)
+		;
+	paths = ft_split(envp[i], ':');
+	i = -1;
+	while (paths[++i])
+	{
+		path = ft_strjoin(paths[i], "/");
+		path_with_cmd = ft_strjoin(path, cmd);
+		if (access(path_with_cmd, F_OK) == 0)
+		{
+			free_tab(paths);
+			free(path);
+			return (path_with_cmd);
+		}
+		free(path);
+		free(path_with_cmd);
+	}
+	free_tab(paths);
+	return (NULL);
+}
 
 int	change_fd(char *file, int fd, char **av)
 {
@@ -59,7 +88,10 @@ void	close_all(t_fds p)
 void	command_not_found(char *cmd, t_main m, int i)
 {
 	if (i == 1 && open(m.av[1], O_RDONLY) == -1)
+	{
 		ft_printf("Error: %s: %s\n", strerror(errno), m.av[1]);
+		return ;
+	}
 	else if (i == m.ac - 3)
 		open(m.av[m.ac - 1], O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	ft_printf("Error: command not found: %s\n", cmd);

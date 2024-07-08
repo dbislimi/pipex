@@ -4,10 +4,12 @@ LIBFT      = $(LIBFT_PATH)/libft.a
 PIPEX_PATH = ./srcs/pipex
 BONUS_PATH = ./srcs/bonus
 
-SRCS = ${addprefix ${PIPEX_PATH}/, pipex.c}
-SRCS_B = ${addprefix ${BONUS_PATH}/,pipex_bonus.c \
-									execution.c \
+SRCS = ${addprefix ${PIPEX_PATH}/, pipex.c \
 									pipex_utils.c \
+									execution.c}
+SRCS_B = ${addprefix ${BONUS_PATH}/,pipex_bonus.c \
+									execution_bonus.c \
+									pipex_utils_bonus.c \
 									here_doc.c}
 OBJS = ${SRCS:.c=.o}
 OBJS_B = ${SRCS_B:.c=.o}

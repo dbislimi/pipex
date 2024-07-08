@@ -6,7 +6,7 @@
 /*   By: dbislimi <dbislimi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:20:58 by dbislimi          #+#    #+#             */
-/*   Updated: 2024/07/06 18:53:47 by dbislimi         ###   ########.fr       */
+/*   Updated: 2024/07/08 19:26:51 by dbislimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	here_doc_margin(int nb_of_pipes)
 	write(1, "heredoc>", 8);
 }
 
-void	here_doc(int fd[2], int nb_of_pipes, char *limiter)
+void	here_doc(int fd[2], int nb_of_pipes, char *limiter, int *i)
 {
 	char	*line;
 	char	*lim;
@@ -38,4 +38,5 @@ void	here_doc(int fd[2], int nb_of_pipes, char *limiter)
 	free(lim);
 	free(line);
 	close(fd[1]);
+	*i = 1;
 }
